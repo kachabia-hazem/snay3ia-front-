@@ -1,0 +1,86 @@
+/* Footer.css */
+.footer {
+    background-color: #c7ddfd; /* Gris très clair */
+    color: #495057; /* Gris foncé */
+    padding: 40px 20px;
+    font-size: 14px;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+  }
+  
+  .footer-section h3 {
+    color: #212529; /* Noir grisâtre */
+    border-bottom: 2px solid #dee2e6; /* Gris clair */
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 16px;
+  }
+  
+  .footer-section p, 
+  .footer-section address {
+    line-height: 1.6;
+    color: #6c757d; /* Gris moyen */
+  }
+  
+  .footer-section address p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-icon {
+    margin-right: 10px;
+    color: #adb5bd; /* Gris clair pour les icônes */
+    font-size: 14px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .social-icon {
+    color: #6c757d; /* Gris moyen */
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+  
+  .social-icon:hover {
+    color: #212529; /* Noir grisâtre au survol */
+  }
+  
+  .copyright {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef; /* Gris très clair */
+    color: #adb5bd; /* Gris clair */
+    font-size: 12px;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-section {
+      flex: 100%;
+      margin-bottom: 25px;
+    }
+    
+    .footer-section:not(:last-child) {
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 20px;
+    }
+  }
