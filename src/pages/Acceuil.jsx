@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import ClientRequestForm from "./ClientRequestForm";
 import {
   FiZap,
   FiDroplet,
@@ -17,11 +18,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function Acceuil() {
   const scrollRef = useRef(null);
   const [categories, setCategories] = useState([]);
-  const [artisans, setArtisans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedArtisan, setSelectedArtisan] = useState(null);
 
-  // Scroll animation for categories
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     let animationId;
@@ -46,9 +47,7 @@ function Acceuil() {
     };
   }, []);
 
-  // Fetch categories and artisans
   useEffect(() => {
-    // Fetch categories
     const fetchCategories = async () => {
       try {
         const response = await fetch(
@@ -100,33 +99,25 @@ function Acceuil() {
         });
 
         setCategories(mappedCategories);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    // Fetch artisans
-    const fetchArtisans = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/api/users/artisans");
-        if (!response.ok) {
-          throw new Error(`Failed to fetch artisans: ${response.statusText}`);
-        }
-        const data = await response.json();
-        setArtisans(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    // Fetch both categories and artisans
-    Promise.all([fetchCategories(), fetchArtisans()])
-      .then(() => setLoading(false))
-      .catch((err) => {
-        setError(err.message);
         setLoading(false);
-      });
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
   }, []);
+
+  const handleContactClick = (artisan) => {
+    setSelectedArtisan(artisan);
+    setShowForm(true);
+  };
+
+  const handleFormClose = () => {
+    setShowForm(false);
+    setSelectedArtisan(null);
+  };
 
   return (
     <div className="acceuil-container">
@@ -177,24 +168,15 @@ function Acceuil() {
         Nos Artisans
       </h1>
       <br />
-      <div className="artisans-container">
-        {artisans.length > 0 ? (
-          artisans.map((artisan, index) => (
-            <CardOuvrier
-              key={index}
-              firstName={artisan.firstName}
-              lastName={artisan.lastName}
-              category={artisan.servicesCategory}
-              experience={artisan.experience}
-              location={artisan.location}
-              bio={artisan.bio}
-              availability={artisan.availability}
-            />
-          ))
-        ) : (
-          <p>No artisans found.</p>
-        )}
-      </div>
+      <CardOuvrier onContactClick={handleContactClick} />
+
+      {showForm && (
+        <ClientRequestForm
+          artisan={selectedArtisan}
+          onClose={handleFormClose}
+        />
+      )}
+
       <Footer />
     </div>
   );

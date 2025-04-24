@@ -1,0 +1,179 @@
+/* ClientRequestForm.css */
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #000;
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 10px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+}
+
+.form-input:focus,
+.form-select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Style pour le groupe description */
+.highlighted-group {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f0f7ff;
+    border-radius: 5px;
+    border-left: 4px solid #007bff;
+}
+
+.highlighted-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b8daff;
+    border-radius: 5px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border 0.3s ease;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.highlighted-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Styles pour les disponibilités */
+.availability-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.availability-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.availability-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.availability-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.availability-text {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Style pour les champs d'heure */
+.time-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    margin-left: 24px;
+}
+
+.time-input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: #f9f9f9;
+    width: 90px;
+}
+
+.highlighted-time-group {
+    padding: 10px;
+    background-color: #f0f7ff;
+    border-radius: 5px;
+    border-left: 3px solid #007bff;
+}
+
+.time-separator {
+    color: #666;
+    font-size: 13px;
+}
+
+.submit-button {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-button:hover {
+    background: #0069d9;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .form-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .form-input,
+    .form-select {
+        padding: 8px 10px;
+    }
+    
+    .time-input {
+        width: 80px;
+    }}
