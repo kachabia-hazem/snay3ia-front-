@@ -55,7 +55,11 @@ const Navbar = () => {
               onClick={() => setMenuOpen(!menuOpen)}
               className="menu-toggle"
             >
-              {menuOpen ? <X className="menu-icon" /> : <Menu className="menu-icon" />}
+              {menuOpen ? (
+                <X className="menu-icon" />
+              ) : (
+                <Menu className="menu-icon" />
+              )}
             </button>
           </div>
         </div>
@@ -130,7 +134,7 @@ const Navbar = () => {
         /* Navbar */
         .navbar {
           background-color: #ffffff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           position: sticky;
           top: 0;
           z-index: 50;
@@ -140,7 +144,7 @@ const Navbar = () => {
         .nav-content {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 0 1rem;
+          padding: 0 1.5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -149,21 +153,11 @@ const Navbar = () => {
         /* Logo */
         .logo-container {
           text-decoration: none;
-          display: flex;
-          flex-direction: column;
         }
 
-        .logo-title {
-          font-size: 2rem;
-          font-weight: bold;
-          color: #2d3748;
-          letter-spacing: 1px;
-        }
-
-        .logo-subtitle {
-          font-size: 1rem;
-          color: #4a5568;
-          margin-top: 0.25rem;
+        .logo {
+          width: 120px;
+          height: auto;
         }
 
         /* Desktop Menu */
@@ -183,17 +177,18 @@ const Navbar = () => {
           color: #2d3748;
           text-decoration: none;
           font-size: 1.1rem;
-          font-weight: 500;
-          padding: 0.5rem 0;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
           position: relative;
+          transition: color 0.3s ease;
         }
 
         .nav-link:hover {
-          color: #2d3748;
+          color: #4299e1;
         }
 
         .nav-link:hover::after {
-          content: '';
+          content: "";
           position: absolute;
           bottom: 0;
           left: 0;
@@ -204,24 +199,27 @@ const Navbar = () => {
         }
 
         @keyframes underline {
-          from { transform: scaleX(0); }
-          to { transform: scaleX(1); }
+          from {
+            transform: scaleX(0);
+          }
+          to {
+            transform: scaleX(1);
+          }
         }
 
         .auth-buttons {
           display: flex;
           gap: 1rem;
-          margin-left: 1rem;
           align-items: center;
         }
 
         .auth-button {
           padding: 0.5rem 1.25rem;
-          border-radius: 0.375rem;
+          border-radius: 8px;
           font-size: 1rem;
           font-weight: 600;
           text-decoration: none;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
         }
 
         .login-btn {
@@ -270,7 +268,7 @@ const Navbar = () => {
           border-radius: 50%;
           object-fit: cover;
           border: 2px solid #e2e8f0;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
         }
 
         .user-profile:hover .user-profile-img {
@@ -332,11 +330,11 @@ const Navbar = () => {
         }
 
         .mobile-nav-link:hover {
-          color: #2d3748;
+          color: #4299e1;
         }
 
         .mobile-nav-link:hover::after {
-          content: '';
+          content: "";
           position: absolute;
           bottom: 0;
           left: 0;
@@ -356,12 +354,12 @@ const Navbar = () => {
 
         .mobile-auth-button {
           padding: 0.75rem;
-          border-radius: 0.375rem;
+          border-radius: 8px;
           font-size: 1rem;
           font-weight: 600;
           text-decoration: none;
           text-align: center;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
         }
 
         .mobile-login-btn {
@@ -389,14 +387,14 @@ const Navbar = () => {
           justify-content: center;
           gap: 0.5rem;
           padding: 0.75rem;
-          border-radius: 0.375rem;
+          border-radius: 8px;
           font-size: 1rem;
           font-weight: 600;
           text-decoration: none;
           text-align: center;
           color: #2d3748;
           border: 2px solid #e2e8f0;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
         }
 
         .mobile-user-profile-img {

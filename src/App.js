@@ -7,7 +7,6 @@ import logo from "./logo.svg";
  import Acceuil from "./pages/Acceuil";
  import ClientRequestForm from "./pages/ClientRequestForm";
   import Profile from "./pages/Profile";
-  import About from "./pages/About";
  function App() {
    return (
      <div className="App">
@@ -18,7 +17,6 @@ import logo from "./logo.svg";
          <Route path="/acceuil" element={<Acceuil />} />
           <Route path="/client-request-form" element={<ClientRequestForm />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/about" element={<About />} />
         </Routes>
      </div>
    );
