@@ -1,0 +1,47 @@
+/* ConsultRequests.css */
+
+.consult-requests {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .consult-requests h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #ecf0f1;
+    display: inline-block;
+    font-weight: 600;
+  }
+  
+  /* Animation d'entrée */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .consult-requests {
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .consult-requests {
+      padding: 1.5rem 1rem;
+    }
+    
+    .consult-requests h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .consult-requests h2 {
+      font-size: 1.3rem;
+      padding-bottom: 0.3rem;
+    }
+  }
