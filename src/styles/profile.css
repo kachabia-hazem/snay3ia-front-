@@ -173,6 +173,23 @@
   color: #4299e1;
 }
 
+/* Specific styling for danger card type */
+.profile-cards-list li > div[data-card-type="danger"] {
+  border-left: 4px solid #dc3545;
+}
+
+.profile-cards-list li > div[data-card-type="danger"] h5 {
+  color: #dc3545;
+}
+
+.profile-cards-list li > div[data-card-type="danger"] button {
+  background-color: #dc3545;
+}
+
+.profile-cards-list li > div[data-card-type="danger"] button:hover {
+  background-color: #c82333;
+}
+
 /* Responsive Tweaks */
 @media (max-width: 768px) {
   .profile-container {
