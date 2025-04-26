@@ -1,0 +1,128 @@
+.requests-table-container {
+  margin-top: 25px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+}
+
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  min-width: 600px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.requests-table thead {
+  background-color: #1a2a3a;
+  color: #ffffff;
+}
+
+.requests-table th {
+  padding: 16px 15px;
+  font-weight: 500;
+  text-align: left;
+  font-size: 0.85em;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid #2d4052;
+}
+
+.requests-table td {
+  padding: 14px 15px;
+  color: #4a4a4a;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+.requests-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.requests-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.requests-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.no-requests-message {
+  text-align: center;
+  padding: 24px;
+  color: #6c757d;
+  font-weight: 400;
+  background-color: #ffffff;
+}
+
+/* Boutons */
+.requests-table button {
+  padding: 8px 16px;
+  font-size: 0.85em;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  margin: 0 4px;
+  transition: all 0.25s cubic-bezier(0.3, 0, 0.5, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.requests-table button:focus {
+  outline: 2px solid rgba(45, 114, 210, 0.25);
+  outline-offset: 2px;
+}
+
+/* Bouton Accepter */
+.requests-table .accept-button {
+  background-color: #2d7a3d;
+  color: white;
+}
+
+.requests-table .accept-button:hover {
+  background-color: #236532;
+  box-shadow: 0 2px 4px rgba(45, 122, 61, 0.15);
+}
+
+/* Bouton Refuser */
+.requests-table .reject-button {
+  background-color: #c23b3b;
+  color: white;
+}
+
+.requests-table .reject-button:hover {
+  background-color: #a33232;
+  box-shadow: 0 2px 4px rgba(194, 59, 59, 0.15);
+}
+
+/* Icônes des boutons */
+.requests-table button svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+@media (max-width: 768px) {
+  .requests-table-container {
+    margin-top: 20px;
+    border-radius: 4px;
+  }
+
+  .requests-table th {
+    padding: 14px 12px;
+  }
+
+  .requests-table td {
+    padding: 12px;
+    font-size: 0.82em;
+  }
+
+  .requests-table button {
+    padding: 6px 12px;
+    font-size: 0.82em;
+  }
+}
