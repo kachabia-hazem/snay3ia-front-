@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
 import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
@@ -13,10 +13,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
-    const data = { email, password, rememberMe };
+    const data = { phone, password, rememberMe };
 
     try {
-      console.log("Attempting login with:", email);
+      console.log("Attempting login with:", phone);
       const response = await axios.post(
         "http://localhost:5000/api/login",
         data
@@ -88,16 +88,16 @@ const Login = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="email">
-              Email
+            <label className="form-label" htmlFor="phone">
+              Phone
             </label>
             <input
-              type="email"
-              id="email"
+              type="phone"
+              id="phone"
               className="form-input"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               required
             />
           </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Added for navigation
 import {
   Container,
   Row,
@@ -7,6 +8,7 @@ import {
   Button,
   Form,
   ListGroup,
+  Modal, // Added for delete confirmation modal
 } from "react-bootstrap";
 import {
   FaUser,
@@ -14,6 +16,7 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaClock,
+  FaTrash, // Added for delete icon
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/profile.css";
@@ -25,6 +28,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 
 const Profile = () => {
+  const navigate = useNavigate(); // Added for navigation
   const defaultProfileData = {
     firstName: "",
     lastName: "",
@@ -41,8 +45,8 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(defaultProfileData);
   const [isEditing, setIsEditing] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Added for delete modal
 
-  // Authentication check function
   const checkAuthentication = () => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -245,12 +249,53 @@ const Profile = () => {
     }
   };
 
+  // Added handlers for delete account functionality
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+
+  const handleConfirmDelete = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      console.log("token", token);
+      console.log("userId", userId);
+
+      if (!token || !userId) {
+        console.error("Token or userId not found in localStorage");
+        toast.error("Authentication required. Please login again.");
+        return;
+      }
+
+      await axios.delete(`http://localhost:5000/api/user/${userId}`, {});
+
+      console.log("Account deletion confirmed!");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+
+      toast.success("Account deleted successfully!", {
+        position: "top-right",
+        autoClose: 1200, // Display for 1.2 seconds
+      });
+
+      // Delay navigation to allow the toast to be visible
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch (error) {
+      console.error(
+        "Error deleting account:",
+        error.response?.data || error.message
+      );
+      toast.error("Failed to delete account. Please try again.");
+    }
+    setShowDeleteModal(false);
+  };
+
   return (
     <Container fluid className="p-0">
       <ToastContainer />
-      {/* Navbar at the top */}
       <Navbar />
-      {/* Profile content below the Navbar */}
       <div className="profile-container">
         <div className="main-content">
           <h2 className="mb-4 profile-title">My professional profile</h2>
@@ -263,6 +308,16 @@ const Profile = () => {
                 buttonText={isEditing ? "Cancel" : "Edit"}
                 onButtonClick={() => setIsEditing(!isEditing)}
                 cardType="info"
+              />
+            </li>
+            <li>
+              <ProfileContainer
+                icon={<FaTrash />}
+                title="delete account"
+                subtitle="permanently delete your account and all data"
+                buttonText="Delete"
+                onButtonClick={handleShowDeleteModal}
+                cardType="danger"
               />
             </li>
           </ul>
@@ -491,6 +546,40 @@ const Profile = () => {
           )}
         </div>
       </div>
+
+      {/* Added delete confirmation modal */}
+      <Modal
+        show={showDeleteModal}
+        onHide={handleCloseDeleteModal}
+        centered
+        className="delete-confirmation-modal"
+      >
+        <Modal.Header closeButton className="modal-header">
+          <Modal.Title className="modal-title">
+            Confirmer la suppression
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal-body">
+          Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est
+          irréversible.
+        </Modal.Body>
+        <Modal.Footer className="modal-footerSquarespace">
+          <Button
+            variant="outline-secondary"
+            className="modal-cancel-btn"
+            onClick={handleCloseDeleteModal}
+          >
+            Annuler
+          </Button>
+          <Button
+            variant="danger"
+            className="modal-confirm-btn"
+            onClick={handleConfirmDelete}
+          >
+            Oui
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
