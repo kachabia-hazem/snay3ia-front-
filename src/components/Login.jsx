@@ -1,54 +1,91 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import Axios
-import { Link } from "react-router-dom"; // Import Link
-import "../styles/Login.css"; // Importez le fichier CSS
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom"; // Add useNavigate
+import "../styles/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // For programmatic navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
     const data = { email, password, rememberMe };
 
     try {
+      console.log("Attempting login with:", email);
       const response = await axios.post(
         "http://localhost:5000/api/login",
         data
       );
 
-      if (response.status === 200) {
-        console.log("Login successful", response.data);
-        if (response.data.token) {
-          localStorage.setItem("token", response.data.token);
-          // Store the user ID (adjust the key based on your backend response)
-          const userId = response.data.userId; // Common variations
-          if (userId) {
-            localStorage.setItem("userId", userId);
-          } else {
-            console.error("No user ID returned from login response");
-          }
+      console.log("Login response:", response.data);
+
+      if (response.status === 200 && response.data) {
+        // Extract token and user information
+        const { token, userId, role } = response.data;
+
+        if (!token || !userId) {
+          console.error("Missing token or userId in response:", response.data);
+          setError("Login successful but missing authentication data");
+          return;
         }
-        const userRole = response.data.role || response.data.user?.role;
-        if (userRole === "service_provider") {
-          window.location.href = "/serviceProviderProfile";
-        } else {
-          window.location.href = "/userDashboard";
+
+        // Store auth data in localStorage with additional safeguards
+        try {
+          localStorage.setItem("token", token);
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("userRole", role || "client");
+
+          // Verify storage was successful
+          const storedToken = localStorage.getItem("token");
+          const storedUserId = localStorage.getItem("userId");
+
+          if (storedToken !== token || storedUserId !== userId) {
+            console.error("Storage verification failed");
+            setError("Browser storage issue detected. Please check settings.");
+            return;
+          }
+
+          console.log("Auth data stored successfully:", {
+            token: token.substring(0, 10) + "...", // Only log part of the token for security
+            userId,
+            role: role || "client",
+          });
+
+          // Navigate programmatically instead of using window.location
+          navigate("/profile");
+        } catch (storageError) {
+          console.error("localStorage error:", storageError);
+          setError(
+            "Could not store login data. Please check browser settings."
+          );
         }
       } else {
-        console.log("Login failed", response.data);
+        setError("Login failed. Please check your credentials.");
       }
     } catch (error) {
-      console.log("Error logging in", error);
+      console.error(
+        "Error during login:",
+        error.response?.data || error.message
+      );
+      setError(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        <img src="/assets/images/logo.png" className="logo" />
+        <img src="/assets/images/logo.png" alt="Logo" className="logo" />
         <h1 className="login-title">Welcome!</h1>
+
+        {error && <div className="error-message">{error}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="email">
@@ -102,7 +139,7 @@ const Login = () => {
           </div>
         </form>
         <p className="register-link">
-          Don’t have an Account?{" "}
+          Don't have an Account?{" "}
           <Link to="/register" className="register-link">
             Register
           </Link>

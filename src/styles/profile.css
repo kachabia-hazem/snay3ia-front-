@@ -1,31 +1,200 @@
+/* Profile Main Container */
 .profile-container {
-    background: linear-gradient(to right, #f8f9fa, #e0eafc);
-    min-height: 100vh;
-    display: flex;
+  background: linear-gradient(to bottom, #e0eafc, #f8f9fa);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Main content */
+.main-content {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Page Title */
+.profile-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Profile Cards List */
+.profile-cards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Individual Card inside the list */
+.profile-cards-list li {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Profile Detail Card */
+.profile-details-card {
+  background-color: #f9fbff;
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-details-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Titles inside Profile Details */
+.profile-details-card h4 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #003366;
+  text-align: left;
+  border-bottom: 2px solid #4299e1;
+  padding-bottom: 0.5rem;
+}
+
+/* Profile Details Text */
+.profile-details-card p {
+  font-size: 1.1rem;
+  color: #2d3748;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  line-height: 1.6;
+}
+
+/* Inputs inside Forms */
+.profile-details-card .form-control,
+.profile-details-card .form-select {
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-details-card .form-control:focus,
+.profile-details-card .form-select:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 243, 0.2);
+}
+
+/* Save Button */
+.action-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #00c846;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #00a838;
+  transform: translateY(-3px);
+}
+
+/* Availability Section */
+.availability-card {
+  background-color: #f9fbff;
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.availability-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Availability Section Title */
+.availability-card h4 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #003366;
+  text-align: left;
+  border-bottom: 2px solid #4299e1;
+  padding-bottom: 0.5rem;
+}
+
+/* List inside Availability */
+.availability-card .list-group-item {
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d3748;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.availability-card .list-group-item:hover {
+  background-color: #e0eafc;
+  border-radius: 8px;
+}
+
+/* Icons */
+.icon,
+.picon {
+  font-size: 1.3rem;
+  vertical-align: middle;
+  color: #4299e1;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+
+  .profile-cards-list {
     flex-direction: column;
     align-items: center;
   }
-  
-  .profile-card {
-    background-color: white;
-    border-radius: 20px;
-    padding: 2rem;
-    margin-top: 3rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
-    text-align: center;
+
+  .main-content {
+    padding: 1.5rem;
+    border-radius: 0.8rem;
   }
-  
-  .profile-avatar {
-    border-radius: 50%;
-    width: 120px;
-    margin-bottom: 1rem;
-    border: 3px solid #007bff;
+
+  .profile-title {
+    font-size: 2rem;
   }
-  
-  .profile-card h2 {
-    margin-bottom: 1rem;
-    color: #007bff;
+
+  .profile-details-card,
+  .availability-card {
+    padding: 1.5rem;
   }
-  
+}

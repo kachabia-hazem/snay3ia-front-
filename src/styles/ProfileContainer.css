@@ -1,0 +1,72 @@
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profile-card__icon {
+  font-size: 2rem;
+  color: #4299e1;
+}
+
+.profile-card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+.profile-card__subtitle {
+  font-size: 1.1rem;
+  color: #718096;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.profile-card__description {
+  font-size: 1rem;
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.profile-card__button {
+  display: inline-block;
+  background-color: #4299e1;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-card__button:hover {
+  background-color: #3182ce;
+}
+
+/* Card Types */
+.profile-card--default {
+  border: 2px solid #edf2f7;
+}
+
+.profile-card--highlight {
+  border: 2px solid #4299e1;
+  background-color: #ebf8ff;
+}
