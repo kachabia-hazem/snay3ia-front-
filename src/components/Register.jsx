@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Importer useNavigate
 import "../styles/Login.css";
 
 const RegisterForm = () => {
@@ -21,6 +22,8 @@ const RegisterForm = () => {
   const [passwordError, setPasswordError] = useState("");
   const [categoryError, setCategoryError] = useState("");
   const [submitStatus, setSubmitStatus] = useState("");
+
+  const navigate = useNavigate(); // Initialiser useNavigate
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -75,7 +78,6 @@ const RegisterForm = () => {
       return;
     }
 
-    // Filter formData based on role
     const dataToSend = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -103,10 +105,12 @@ const RegisterForm = () => {
       });
       const responseData = await response.json();
       if (response.ok) {
-        setSubmitStatus("Inscription réussie !");
-        setFormData(initialFormData); // Reset form on success
+        // Afficher une alerte et naviguer après confirmation
+        alert("Inscription réussie !");
+        setFormData(initialFormData); // Réinitialiser le formulaire
         setPasswordError("");
         setCategoryError("");
+        navigate("/login"); // Naviguer vers la page de connexion
         console.log("Registration successful", responseData);
       } else {
         setSubmitStatus(responseData.message || "Échec de l'inscription.");

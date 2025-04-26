@@ -1,7 +1,7 @@
 // src/components/About.jsx
 import { Helmet } from 'react-helmet';
 import '../styles/About.css';
-
+import Navbar from '../components/Navbar.jsx';
 export default function About() {
   const teamMembers = [
     { name: 'Aya Founès', initials: 'AF' },
@@ -12,6 +12,8 @@ export default function About() {
 
   return (
     <>
+    <div className="consult-requests-page">
+      <Navbar />
       <Helmet>
         <title>À Propos - Sney3iya</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,6 +86,7 @@ export default function About() {
           <p>© 2025 Sney3iya. Tous droits réservés.</p>
         </footer>
       </div>
+    </div>
     </>
   );
 }

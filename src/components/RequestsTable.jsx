@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/RequestsTable.css"; // Importer le style du tableau si nécessaire
-
+ // Importer le style du tableau si nécessaire
+ import "../styles/RequestsTable.css";
 const RequestsTable = ({ requests, onAccept, onReject }) => {
   return (
     <div className="requests-table-container">
@@ -31,8 +31,8 @@ const RequestsTable = ({ requests, onAccept, onReject }) => {
                 <td>{req.urgence}</td>
                 <td>{req.dispo}</td>
                 <td>
-                  <button onClick={() => onAccept(req.id)}>Accepter</button>
-                  <button onClick={() => onReject(req.id)}>Refuser</button>
+                <button className="accept-button" onClick={() => onAccept(req.id)}>Accepter</button>
+                <button className="reject-button" onClick={() => onReject(req.id)}>Refuser</button>
                 </td>
               </tr>
             ))

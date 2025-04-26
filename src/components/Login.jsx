@@ -57,7 +57,7 @@ const Login = () => {
           });
 
           // Navigate programmatically instead of using window.location
-          navigate("/profile");
+          navigate("/Acceuil");
         } catch (storageError) {
           console.error("localStorage error:", storageError);
           setError(
@@ -130,6 +130,7 @@ const Login = () => {
           <div className="form-group">
             <button type="submit" className="login-button">
               Login
+              
             </button>
           </div>
           <div className="text-center">

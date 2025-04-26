@@ -19,24 +19,24 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="desktop-menu">
             {[
-              { path: "/", label: "Accueil" },
-              { path: "/populaire", label: "Populaire" },
-              { path: "/comment-ca-marche", label: "Comment ca marche" },
-              { path: "/trouver-un-artisan", label: "Trouver un artisan" },
+              { path: "/Acceuil", label: "Accueil" },
+              { path: "/Services populaires", label: "Services populaires" },
+              { path: "/Contactez-nous", label: "Contactez-nous" },
+              { path: "/About", label: "A propos" },
             ].map((item) => (
               <Link key={item.path} to={item.path} className="nav-link">
                 {item.label}
               </Link>
             ))}
             <div className="auth-buttons">
-              <Link to="/login" className="auth-button login-btn">
-                Connexion
-              </Link>
-              <Link to="/espace-artisan" className="auth-button join-btn">
+              <Link to="/ConsultRequests" className="auth-button join-btn">
                 Espace artisan
               </Link>
-              <Link to="/contactez-nous" className="auth-button connect-btn">
-                Contactez-nous
+              <Link to="/login" className="auth-button login-btn">
+                Login
+              </Link>
+              <Link to="/login" className="auth-button sign-out-btn">
+                Sign out
               </Link>
               {/* User Profile Icon */}
               <Link to="/profile" className="user-profile">
@@ -70,10 +70,10 @@ const Navbar = () => {
         <div className="mobile-menu">
           <div className="mobile-menu-content">
             {[
-              { path: "/", label: "Accueil" },
-              { path: "/populaire", label: "Populaire" },
-              { path: "/comment-ca-marche", label: "Comment ça marche" },
-              { path: "/trouver-un-artisan", label: "Trouver un artisan" },
+              { path: "/Acceuil", label: "Accueil" },
+              { path: "/Services populaires", label: "Services populaires" },
+              { path: "/Contactez-nous", label: "Contactez-nous" },
+              { path: "/About", label: "A propos" },
             ].map((item) => (
               <Link
                 key={item.path}
@@ -86,25 +86,25 @@ const Navbar = () => {
             ))}
             <div className="mobile-auth-buttons">
               <Link
-                to="/login"
-                className="mobile-auth-button mobile-login-btn"
-                onClick={() => setMenuOpen(false)}
-              >
-                Connexion
-              </Link>
-              <Link
-                to="/espace-artisan"
+                to="/ConsultRequests"
                 className="mobile-auth-button mobile-join-btn"
                 onClick={() => setMenuOpen(false)}
               >
                 Espace artisan
               </Link>
               <Link
-                to="/contactez-nous"
-                className="mobile-auth-button mobile-connect-btn"
+                to="/login"
+                className="mobile-auth-button mobile-login-btn"
                 onClick={() => setMenuOpen(false)}
               >
-                Contactez-nous
+                Login
+              </Link>
+              <Link
+                to="/login"
+                className="mobile-auth-button mobile-sign-out-btn"
+                onClick={() => setMenuOpen(false)}
+              >
+                Sign out
               </Link>
               {/* Mobile User Profile Icon */}
               <Link
@@ -112,7 +112,6 @@ const Navbar = () => {
                 className="mobile-user-profile"
                 onClick={() => setMenuOpen(false)}
               >
-                <br />
                 <img
                   src={userProfileImage}
                   alt="User Profile"
@@ -226,6 +225,7 @@ const Navbar = () => {
           background-color: #2d3748;
           color: white;
           border: 2px solid #2d3748;
+          width: 85px;
         }
 
         .login-btn:hover {
@@ -233,14 +233,15 @@ const Navbar = () => {
           transform: translateY(-2px);
         }
 
-        .connect-btn {
-          background-color: #ffffff;
-          color: #2d3748;
-          border: 2px solid #2d3748;
+        .sign-out-btn {
+          background-color: rgb(188, 0, 63);
+          color: white;
+          border: 2px solid rgb(188, 0, 63);
+          width: 120px;
         }
 
-        .connect-btn:hover {
-          background-color: #f7fafc;
+        .sign-out-btn:hover {
+          background-color: rgb(188, 0, 63);
           transform: translateY(-2px);
         }
 
@@ -248,6 +249,7 @@ const Navbar = () => {
           background-color: #4299e1;
           color: white;
           border: 2px solid #4299e1;
+          width: 160px;
         }
 
         .join-btn:hover {
@@ -302,6 +304,7 @@ const Navbar = () => {
 
         /* Mobile Menu */
         .mobile-menu {
+          display: ${menuOpen ? "block" : "none"};
           background-color: #ffffff;
           border-top: 1px solid #e2e8f0;
           padding: 1.5rem 0;
@@ -309,7 +312,7 @@ const Navbar = () => {
 
         @media (min-width: 768px) {
           .mobile-menu {
-            display: none;
+            display: none !important;
           }
         }
 
@@ -368,10 +371,10 @@ const Navbar = () => {
           border: 2px solid #2d3748;
         }
 
-        .mobile-connect-btn {
-          background-color: #ffffff;
-          color: #2d3748;
-          border: 2px solid #2d3748;
+        .mobile-sign-out-btn {
+          background-color: rgb(188, 0, 63);
+          color: white;
+          border: 2px solid rgb(188, 0, 63);
         }
 
         .mobile-join-btn {
