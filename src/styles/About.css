@@ -1,0 +1,328 @@
+/* src/styles/styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.main-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ebf8ff 0%, #90cdf4 100%); /* Gradient inspired by #4299e1 */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  padding: 5rem 0;
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(66, 153, 225, 0.7), rgba(27, 73, 113, 0.5)); /* #4299e1-based overlay */
+  transition: opacity 0.5s ease;
+}
+
+.hero-section:hover .hero-overlay {
+  opacity: 0.9;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1.5rem;
+  transform: translateY(20px);
+  animation: slideUp 0.8s ease-out 0.3s forwards;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+  transition: letter-spacing 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero-title:hover {
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.6s forwards;
+}
+
+/* Mission Section */
+.mission-section {
+  padding: 5rem 0;
+  background-color: #ebf8ff; /* Light tint of #4299e1 */
+  animation: fadeIn 1s ease-out 0.2s forwards;
+}
+
+.section-content {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #4299e1; /* Base color */
+  transition: width 0.3s ease;
+}
+
+.section-title:hover::after {
+  width: 80px;
+}
+
+.section-title:hover {
+  color: #2b6cb0; /* Darker shade */
+}
+
+.section-text {
+  font-size: 1.125rem;
+  color: #4b5563;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 0.4s forwards;
+}
+
+/* Team Section */
+.team-section {
+  padding: 5rem 0;
+  background-color: #f7fafc; /* Neutral with a blue hint */
+  animation: fadeIn 1s ease-out 0.3s forwards;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.team-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  text-align: center;
+  transform: scale(0.95);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+  animation: scaleUp 0.6s ease-out forwards;
+  animation-delay: calc(0.1s * var(--index));
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+  background-color: #ebf8ff; /* Light tint on hover */
+}
+
+.team-avatar {
+  width: 7rem;
+  height: 7rem;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #4299e1; /* Base color */
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.team-card:hover .team-avatar {
+  border-color: #2b6cb0; /* Darker shade */
+  transform: rotate(5deg);
+}
+
+.avatar-initials {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #4b5563;
+  transition: color 0.3s ease;
+}
+
+.team-card:hover .avatar-initials {
+  color: #4299e1; /* Base color */
+}
+
+.team-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.team-card:hover .team-name {
+  color: #4299e1; /* Base color */
+}
+
+.team-role {
+  font-size: 1rem;
+  color: #4b5563;
+}
+
+/* Call to Action Section */
+.cta-section {
+  padding: 5rem 0;
+  background: linear-gradient(to bottom, #ebf8ff, #90cdf4); /* Gradient with #4299e1 tints */
+  animation: fadeIn 1s ease-out 0.4s forwards;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #4299e1; /* Base color */
+  color: #ffffff;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #2b6cb0; /* Darker shade */
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4); /* Shadow with #4299e1 */
+}
+
+/* Footer */
+.footer {
+  padding: 2.5rem 0;
+  background-color: #2b6cb0; /* Darker shade */
+  color: #ffffff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #4299e1, #2b6cb0); /* Gradient with #4299e1 */
+  opacity: 0.8;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-title {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero-content {
+    max-width: 56rem;
+  }
+  .section-content {
+    max-width: 64rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-text {
+    font-size: 1rem;
+  }
+  .section-title {
+    font-size: 1.75rem;
+  }
+  .section-text {
+    font-size: 1rem;
+  }
+  .team-card {
+    padding: 1.5rem;
+  }
+  .team-avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+  .team-name {
+    font-size: 1.25rem;
+  }
+}
