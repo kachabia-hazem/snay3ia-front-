@@ -29,7 +29,7 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="auth-buttons">
-              <Link to="/ConsultRequests" className="auth-button join-btn">
+              <Link to="/consult-requests" className="auth-button join-btn">
                 Espace artisan
               </Link>
               <Link to="/login" className="auth-button login-btn">

@@ -34,24 +34,6 @@
   text-transform: uppercase;
 }
 
-/* Profile Cards List */
-.profile-cards-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 2.5rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-/* Individual Card inside the list */
-.profile-cards-list li {
-  flex: 1 1 300px;
-  display: flex;
-  justify-content: center;
-}
-
 /* Profile Detail Card */
 .profile-details-card {
   background-color: #f9fbff;
@@ -105,21 +87,16 @@
   box-shadow: 0 0 0 3px rgba(66, 153, 243, 0.2);
 }
 
-/* Save Button */
+/* Action Buttons */
 .action-btn {
-  margin-top: 1.5rem;
-  width: 100%;
-  padding: 0.75rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1.1rem;
   font-weight: 600;
-  background-color: #00c846;
-  border: none;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .action-btn:hover {
-  background-color: #00a838;
   transform: translateY(-3px);
 }
 
@@ -173,32 +150,45 @@
   color: #4299e1;
 }
 
-/* Specific styling for danger card type */
-.profile-cards-list li > div[data-card-type="danger"] {
-  border-left: 4px solid #dc3545;
+/* Modal Styling */
+.delete-confirmation-modal .modal-content {
+  border-radius: 1rem;
 }
 
-.profile-cards-list li > div[data-card-type="danger"] h5 {
-  color: #dc3545;
+.modal-header {
+  border-bottom: 2px solid #4299e1;
 }
 
-.profile-cards-list li > div[data-card-type="danger"] button {
-  background-color: #dc3545;
+.modal-title {
+  color: #003366;
+  font-weight: 600;
 }
 
-.profile-cards-list li > div[data-card-type="danger"] button:hover {
-  background-color: #c82333;
+.modal-body {
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+
+.modal-footer {
+  gap: 1rem;
+}
+
+.modal-cancel-btn,
+.modal-confirm-btn {
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+}
+
+.modal-cancel-btn:hover,
+.modal-confirm-btn:hover {
+  transform: translateY(-2px);
 }
 
 /* Responsive Tweaks */
 @media (max-width: 768px) {
   .profile-container {
     padding: 1rem;
-  }
-
-  .profile-cards-list {
-    flex-direction: column;
-    align-items: center;
   }
 
   .main-content {
@@ -213,5 +203,10 @@
   .profile-details-card,
   .availability-card {
     padding: 1.5rem;
+  }
+
+  .action-btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
 }

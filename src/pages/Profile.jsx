@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Added for navigation
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Row,
@@ -8,7 +8,7 @@ import {
   Button,
   Form,
   ListGroup,
-  Modal, // Added for delete confirmation modal
+  Modal,
 } from "react-bootstrap";
 import {
   FaUser,
@@ -16,19 +16,19 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaClock,
-  FaTrash, // Added for delete icon
+  FaTrash,
+  FaCalendarCheck,
 } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/profile.css";
 import axios from "axios";
 import ProfileContainer from "../components/ProfileContainer";
-import { FaStar } from "react-icons/fa6";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 
 const Profile = () => {
-  const navigate = useNavigate(); // Added for navigation
+  const navigate = useNavigate();
   const defaultProfileData = {
     firstName: "",
     lastName: "",
@@ -45,19 +45,14 @@ const Profile = () => {
   const [profileData, setProfileData] = useState(defaultProfileData);
   const [isEditing, setIsEditing] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false); // Added for delete modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const checkAuthentication = () => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
 
-    console.log("Auth check - Token exists:", !!token);
-    console.log("Auth check - UserId exists:", !!userId);
-
     if (!token || !userId) {
-      console.error("Missing authentication data");
       toast.error("Authentication required. Please login again.");
-
       setTimeout(() => {
         window.location.href = "/login";
       }, 2000);
@@ -65,10 +60,6 @@ const Profile = () => {
     }
     return true;
   };
-
-  useEffect(() => {
-    console.log("profileData updated:", profileData);
-  }, [profileData]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -94,11 +85,6 @@ const Profile = () => {
       const userId = localStorage.getItem("userId");
 
       try {
-        console.log(
-          `Making request to: http://localhost:5000/api/user/${userId}`
-        );
-        console.log(`Using token: ${token.substring(0, 10)}...`);
-
         const response = await axios.get(
           `http://localhost:5000/api/user/${userId}`,
           {
@@ -109,7 +95,6 @@ const Profile = () => {
         );
 
         if (response.status === 200) {
-          console.log("Initial profile data fetched:", response.data);
           setProfileData({
             ...defaultProfileData,
             ...response.data,
@@ -136,11 +121,6 @@ const Profile = () => {
           });
         }
       } catch (error) {
-        console.error(
-          "Error fetching profile data:",
-          error.response?.data || error.message
-        );
-
         if (error.response?.status === 401) {
           toast.error("Session expired. Please login again.");
           setTimeout(() => {
@@ -196,8 +176,6 @@ const Profile = () => {
       payload.availability = profileData.availability ?? true;
     }
 
-    console.log("Sending payload:", payload);
-
     try {
       const response = await axios.put(
         `http://localhost:5000/api/user/${userId}`,
@@ -210,8 +188,6 @@ const Profile = () => {
       );
 
       if (response.status === 200) {
-        console.log("PUT response:", response.data);
-
         const fetchResponse = await axios.get(
           `http://localhost:5000/api/user/${userId}`,
           {
@@ -222,7 +198,6 @@ const Profile = () => {
         );
 
         if (fetchResponse.status === 200) {
-          console.log("Fetched profile data after update:", fetchResponse.data);
           setProfileData(fetchResponse.data);
           setIsEditing(false);
           toast.success("Profile updated successfully!");
@@ -231,11 +206,6 @@ const Profile = () => {
         }
       }
     } catch (error) {
-      console.error(
-        "Error updating profile:",
-        error.response?.data || error.message
-      );
-
       if (error.response?.status === 401) {
         toast.error("Session expired. Please login again.");
         setTimeout(() => {
@@ -249,7 +219,6 @@ const Profile = () => {
     }
   };
 
-  // Added handlers for delete account functionality
   const handleShowDeleteModal = () => setShowDeleteModal(true);
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
@@ -258,38 +227,36 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
 
-      console.log("token", token);
-      console.log("userId", userId);
-
       if (!token || !userId) {
-        console.error("Token or userId not found in localStorage");
         toast.error("Authentication required. Please login again.");
         return;
       }
 
-      await axios.delete(`http://localhost:5000/api/user/${userId}`, {});
+      await axios.delete(`http://localhost:5000/api/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      console.log("Account deletion confirmed!");
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
 
       toast.success("Account deleted successfully!", {
         position: "top-right",
-        autoClose: 1200, // Display for 1.2 seconds
+        autoClose: 1200,
       });
 
-      // Delay navigation to allow the toast to be visible
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
-      console.error(
-        "Error deleting account:",
-        error.response?.data || error.message
-      );
       toast.error("Failed to delete account. Please try again.");
     }
     setShowDeleteModal(false);
+  };
+
+  const handleViewReservations = () => {
+    navigate("/reservations");
   };
 
   return (
@@ -298,32 +265,10 @@ const Profile = () => {
       <Navbar />
       <div className="profile-container">
         <div className="main-content">
-          <h2 className="mb-4 profile-title">My professional profile</h2>
-          <ul className="profile-cards-list">
-            <li>
-              <ProfileContainer
-                icon={<FaUser />}
-                title="personal information"
-                subtitle="manage your contact information and public profile"
-                buttonText={isEditing ? "Cancel" : "Edit"}
-                onButtonClick={() => setIsEditing(!isEditing)}
-                cardType="info"
-              />
-            </li>
-            <li>
-              <ProfileContainer
-                icon={<FaTrash />}
-                title="delete account"
-                subtitle="permanently delete your account and all data"
-                buttonText="Delete"
-                onButtonClick={handleShowDeleteModal}
-                cardType="danger"
-              />
-            </li>
-          </ul>
+          <h2 className="mb-4 profile-title">My Professional Profile</h2>
           <Card className="mb-4 profile-details-card">
             <Card.Body>
-              <h4 className="mb-3">Profile details</h4>
+              <h4 className="mb-3">Profile Details</h4>
               {isEditing ? (
                 <Form>
                   <Row>
@@ -452,70 +397,105 @@ const Profile = () => {
                   </Row>
                   <Button
                     variant="success"
-                    className="action-btn"
+                    className="action-btn me-2"
                     onClick={handleSaveChanges}
                   >
                     Save Changes
                   </Button>
+                  <Button
+                    variant="secondary"
+                    className="action-btn"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel
+                  </Button>
                 </Form>
               ) : (
-                <Row>
-                  <Col md={6}>
-                    <p>
-                      <FaUser className="me-2 text-muted icon" />
-                      <strong>Full Name:</strong>{" "}
-                      {profileData.firstName || profileData.lastName
-                        ? `${profileData.firstName} ${profileData.lastName}`.trim()
-                        : "N/A"}
-                    </p>
-                    {profileData.role === "service_provider" && (
+                <>
+                  <Row>
+                    <Col md={6}>
                       <p>
-                        <FaUser
-                          className="me-2 text-muted picon"
-                          style={{ color: "#00C846" }}
-                        />
-                        <strong>Job:</strong>{" "}
-                        {profileData.servicesCategory || "N/A"}
+                        <FaUser className="me-2 text-muted icon" />
+                        <strong>Full Name:</strong>{" "}
+                        {profileData.firstName || profileData.lastName
+                          ? `${profileData.firstName} ${profileData.lastName}`.trim()
+                          : "N/A"}
                       </p>
-                    )}
-                    <p>
-                      <FaPhone
-                        className="me-2 text-muted picon"
-                        style={{ color: "#00C846" }}
-                      />
-                      <strong>Phone:</strong> {profileData.phone || "N/A"}
-                    </p>
-                  </Col>
-                  <Col md={6}>
-                    <p>
-                      <FaEnvelope
-                        className="me-2 text-muted picon"
-                        style={{ color: "#00C846" }}
-                      />
-                      <strong>Email:</strong> {profileData.email || "N/A"}
-                    </p>
-                    {profileData.role === "service_provider" && (
-                      <>
+                      {profileData.role === "service_provider" && (
                         <p>
-                          <FaMapMarkerAlt
+                          <FaUser
                             className="me-2 text-muted picon"
                             style={{ color: "#00C846" }}
                           />
-                          <strong>Address:</strong>{" "}
-                          {profileData.location || "N/A"}
+                          <strong>Job:</strong>{" "}
+                          {profileData.servicesCategory || "N/A"}
                         </p>
-                        <p>
-                          <strong>Bio:</strong> {profileData.bio || "N/A"}
-                        </p>
-                      </>
-                    )}
-                  </Col>
-                </Row>
+                      )}
+                      <p>
+                        <FaPhone
+                          className="me-2 text-muted picon"
+                          style={{ color: "#00C846" }}
+                        />
+                        <strong>Phone:</strong> {profileData.phone || "N/A"}
+                      </p>
+                    </Col>
+                    <Col md={6}>
+                      <p>
+                        <FaEnvelope
+                          className="me-2 text-muted picon"
+                          style={{ color: "#00C846" }}
+                        />
+                        <strong>Email:</strong> {profileData.email || "N/A"}
+                      </p>
+                      {profileData.role === "service_provider" && (
+                        <>
+                          <p>
+                            <FaMapMarkerAlt
+                              className="me-2 text-muted picon"
+                              style={{ color: "#00C846" }}
+                            />
+                            <strong>Address:</strong>{" "}
+                            {profileData.location || "N/A"}
+                          </p>
+                          <p>
+                            <strong>Bio:</strong> {profileData.bio || "N/A"}
+                          </p>
+                        </>
+                      )}
+                    </Col>
+                  </Row>
+                  <div className="mt-3">
+                    <Button
+                      variant="primary"
+                      className="action-btn me-2"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      <FaUser className="me-2" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="action-btn"
+                      onClick={handleShowDeleteModal}
+                    >
+                      <FaTrash className="me-2" />
+                      Delete
+                    </Button>
+                  </div>
+                </>
               )}
             </Card.Body>
           </Card>
+          <ProfileContainer
+            icon={<FaCalendarCheck />}
+            title="View Reservations"
+            subtitle="Check your upcoming and past reservations"
+            buttonText="View"
+            onButtonClick={handleViewReservations}
+            cardType="reservations"
+          />
           {profileData.role === "service_provider" && (
-            <Card className="availability-card">
+            <Card className="availability-card mt-4">
               <Card.Body>
                 <h4>Disponibilités</h4>
                 <ListGroup variant="flush">
@@ -547,7 +527,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Added delete confirmation modal */}
       <Modal
         show={showDeleteModal}
         onHide={handleCloseDeleteModal}
@@ -563,7 +542,7 @@ const Profile = () => {
           Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est
           irréversible.
         </Modal.Body>
-        <Modal.Footer className="modal-footerSquarespace">
+        <Modal.Footer className="modal-footer">
           <Button
             variant="outline-secondary"
             className="modal-cancel-btn"

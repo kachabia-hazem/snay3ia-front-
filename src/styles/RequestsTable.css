@@ -58,6 +58,14 @@
   background-color: #ffffff;
 }
 
+/* Action Buttons Container */
+.requests-table .action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 /* Boutons */
 .requests-table button {
   padding: 8px 16px;
@@ -65,7 +73,6 @@
   border-radius: 4px;
   cursor: pointer;
   border: 1px solid transparent;
-  margin: 0 4px;
   transition: all 0.25s cubic-bezier(0.3, 0, 0.5, 1);
   display: inline-flex;
   align-items: center;
@@ -124,5 +131,9 @@
   .requests-table button {
     padding: 6px 12px;
     font-size: 0.82em;
+  }
+
+  .requests-table .action-buttons {
+    gap: 6px;
   }
 }

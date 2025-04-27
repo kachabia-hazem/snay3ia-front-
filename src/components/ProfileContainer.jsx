@@ -21,7 +21,10 @@ const ProfileContainer = ({
         <p className="profile-card__description">{description}</p>
       )}
       {buttonText && (
-        <button onClick={onButtonClick} className="profile-card__button">
+        <button
+          onClick={onButtonClick}
+          className={`profile-card__button profile-card__button--${cardType}`}
+        >
           {buttonText}
         </button>
       )}

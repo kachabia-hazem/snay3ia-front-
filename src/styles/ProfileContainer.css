@@ -1,10 +1,11 @@
+/* Profile Card */
 .profile-card {
   background-color: #ffffff;
   border-radius: 1rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   padding: 2rem;
-  max-width: 400px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 1rem auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -46,7 +47,6 @@
 
 .profile-card__button {
   display: inline-block;
-  background-color: #4299e1;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -54,11 +54,12 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
 }
 
 .profile-card__button:hover {
-  background-color: #3182ce;
+  transform: translateY(-2px);
 }
 
 /* Card Types */
@@ -66,7 +67,50 @@
   border: 2px solid #edf2f7;
 }
 
-.profile-card--highlight {
+.profile-card--info {
   border: 2px solid #4299e1;
-  background-color: #ebf8ff;
+}
+
+.profile-card--info .profile-card__icon {
+  color: #4299e1;
+}
+
+.profile-card--info .profile-card__button {
+  background-color: #4299e1;
+}
+
+.profile-card--info .profile-card__button:hover {
+  background-color: #3182ce;
+}
+
+.profile-card--reservations {
+  border: 2px solid #000000; /* Changed to black */
+}
+
+.profile-card--reservations .profile-card__icon {
+  color: #000000; /* Changed to black */
+}
+
+.profile-card--reservations .profile-card__button {
+  background-color: #000000; /* Changed to black */
+}
+
+.profile-card--reservations .profile-card__button:hover {
+  background-color: #333333; /* Darker black for hover */
+}
+
+.profile-card--danger {
+  border: 2px solid #dc3545;
+}
+
+.profile-card--danger .profile-card__icon {
+  color: #dc3545;
+}
+
+.profile-card--danger .profile-card__button {
+  background-color: #dc3545;
+}
+
+.profile-card--danger .profile-card__button:hover {
+  background-color: #c82333;
 }

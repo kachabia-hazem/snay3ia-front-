@@ -1,6 +1,6 @@
 import React from "react";
- // Importer le style du tableau si nécessaire
- import "../styles/RequestsTable.css";
+import "../styles/RequestsTable.css";
+
 const RequestsTable = ({ requests, onAccept, onReject }) => {
   return (
     <div className="requests-table-container">
@@ -30,15 +30,25 @@ const RequestsTable = ({ requests, onAccept, onReject }) => {
                 <td>{req.desc}</td>
                 <td>{req.urgence}</td>
                 <td>{req.dispo}</td>
-                <td>
-                <button className="accept-button" onClick={() => onAccept(req.id)}>Accepter</button>
-                <button className="reject-button" onClick={() => onReject(req.id)}>Refuser</button>
+                <td className="action-buttons">
+                  <button
+                    className="accept-button"
+                    onClick={() => onAccept(req.id)}
+                  >
+                    Accepter
+                  </button>
+                  <button
+                    className="reject-button"
+                    onClick={() => onReject(req.id)}
+                  >
+                    Refuser
+                  </button>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="8">Aucune demande reçue.</td>
+              <td colSpan="9">Aucune demande reçue.</td>
             </tr>
           )}
         </tbody>
