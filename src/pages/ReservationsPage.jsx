@@ -8,6 +8,9 @@ import "../styles/ReservationsPage.css";
 
 const ReservationsPage = () => {
   const [reservations, setReservations] = useState([]);
+  const [requests, setRequests] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -27,56 +30,45 @@ const ReservationsPage = () => {
 
   // Simulation appel API
   useEffect(() => {
-    const fetchReservations = async () => {
-      if (!checkAuthentication()) return;
-
+    const fetchRequests = async () => {
       try {
-        // Fake data
-        const fakeData = [
-          {
-            id: 1,
-            nom: "Ali",
-            tel: "58047144",
-            adr: "rue basatin grand tunis",
-            panne: "circuit court",
-            desc: "ma yemhi chy",
-            urgence: "fisa3 fisa3",
-            dispo: "8h - 10h",
-          },
-          {
-            id: 2,
-            nom: "Salah",
-            tel: "22630277",
-            adr: "ariana el kobra",
-            panne: "masse f dhaw",
-            desc: "ambouba tech3l w tetfa wahadha w brise ma7rou9",
-            urgence: "fisa3 fisa3 zeda",
-            dispo: "10h - 12h",
-          },
-        ];
-        setReservations(fakeData);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          throw new Error("User ID not found in local storage");
+        }
+
+        const response = await fetch(
+          `http://localhost:5000/api/requests/byclientId/${userId}`
+        );
+        console.log(response);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setRequests(data);
       } catch (error) {
-        console.error("Erreur de chargement:", error);
-        toast.error("Failed to load reservations.");
+        console.error("Error loading requests:", error);
+        setError(error.message);
       } finally {
-        setIsLoading(false);
+        // setLoading(false);
       }
     };
 
-    fetchReservations();
-  }, [navigate]);
+    fetchRequests();
+  }, []);
 
-  if (isLoading) {
-    return (
-      <div className="consult-requests-page">
-        <Navbar />
-        <div className="consult-requests-container">
-          <h2>📋 Réservations de Service</h2>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="consult-requests-page">
+  //       <Navbar />
+  //       <div className="consult-requests-container">
+  //         <h2>📋 Réservations de Service</h2>
+  //         <p>Loading...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="consult-requests-page">
@@ -84,7 +76,7 @@ const ReservationsPage = () => {
       <Navbar />
       <div className="consult-requests-container">
         <h2>📋 Réservations de Service</h2>
-        <Reservations reservations={reservations} />
+        <Reservations reservations={requests} />
       </div>
     </div>
   );

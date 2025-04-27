@@ -84,8 +84,8 @@ function CardOuvrier() {
           </ListGroup>
           <Card.Body className="text-center">
             <button
-              onClick={() => navigate('/client-request-form')}
-              className="btn btn-primary"
+              onClick={() => navigate(`/client-request-form/${worker._id}`)} 
+                           className="btn btn-primary"
             >
               <FontAwesomeIcon icon={faEnvelope} className="me-2" />
               Contacter

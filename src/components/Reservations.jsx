@@ -13,15 +13,17 @@ const Reservations = ({ reservations }) => {
               <th>Nom</th>
               <th>Téléphone</th>
               <th>Adresse</th>
-              <th>Panne</th>
+              <th>Service demandé</th>
               <th>Description de panne</th>
               <th>Urgence</th>
               <th>Disponibilité</th>
+              <th>Date préférée</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colSpan="8">Aucune réservation trouvée.</td>
+              <td colSpan="10">Aucune réservation trouvée.</td>
             </tr>
           </tbody>
         </table>
@@ -38,29 +40,43 @@ const Reservations = ({ reservations }) => {
             <th>Nom</th>
             <th>Téléphone</th>
             <th>Adresse</th>
-            <th>Panne</th>
+            <th>Service demandé</th>
             <th>Description de panne</th>
             <th>Urgence</th>
             <th>Disponibilité</th>
+            <th>Date préférée</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {reservations.length > 0 ? (
             reservations.map((res) => (
-              <tr key={res.id}>
-                <td>{res.id}</td>
-                <td>{res.nom}</td>
-                <td>{res.tel}</td>
-                <td>{res.adr}</td>
-                <td>{res.panne}</td>
-                <td>{res.desc}</td>
-                <td>{res.urgence}</td>
-                <td>{res.dispo}</td>
+              <tr key={res._id}>
+                <td>{res._id}</td>
+                <td>{res.fullName}</td>
+                <td>{res.phone}</td>
+                <td>{res.address}</td>
+                <td>{res.serviceRequested}</td>
+                <td>{res.description}</td>
+                <td>{res.urgency}</td>
+                <td>
+                  {res.availability && res.availability.length > 0 ? (
+                    res.availability.map((slot) => (
+                      <div key={slot._id}>
+                        {slot.period} ({slot.startTime} - {slot.endTime})
+                      </div>
+                    ))
+                  ) : (
+                    "Non spécifiée"
+                  )}
+                </td>
+                <td>{new Date(res.preferredDate).toLocaleDateString()}</td>
+                <td>{res.status}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="8">Aucune réservation trouvée.</td>
+              <td colSpan="10">Aucune réservation trouvée.</td>
             </tr>
           )}
         </tbody>

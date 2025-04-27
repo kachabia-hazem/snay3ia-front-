@@ -3,82 +3,132 @@ import { useNavigate } from "react-router-dom";
 import RequestsTable from "../components/RequestsTable.jsx";
 import Navbar from "../components/Navbar.jsx";
 
-
 const ConsultRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Simulation appel API
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        // À remplacer par un vrai appel API
-        const fakeData = [
-          {
-            id: 1,
-            nom: "Ali",
-            tel: "58047144",
-            adr: "rue basatin grand tunis",
-            panne: "circuit court",
-            desc: "ma yemhi chy",
-            urgence: "fisa3 fisa3",
-            dispo: "8h - 10h",
-          },
-          {
-            id: 2,
-            nom: "Salah",
-            tel: "22630277",
-            adr: "ariana el kobra",
-            panne: "masse f dhaw",
-            desc: "ambouba tech3l w tetfa wahadha w brise ma7rou9",
-            urgence: "fisa3 fisa3 zeda",
-            dispo: "10h - 12h",
-          },
-        ];
-        setRequests(fakeData);
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          throw new Error("User ID not found in local storage");
+        }
+
+        const response = await fetch(
+          `http://localhost:5000/api/requests/bySericeId/${userId}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setRequests(data);
       } catch (error) {
-        console.error("Erreur de chargement:", error);
+        console.error("Error loading requests:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchRequests();
   }, []);
 
-  // Fonction pour gérer l'acceptation de demande
-  const handleAccept = (requestId) => {
-    const updatedRequests = requests.map((request) => {
-      if (request.id === requestId) {
-        return { ...request, statut: "Accepté" };
+  const handleAccept = async (requestId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/requests/${requestId}/accept`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "accepted" }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update request status");
       }
-      return request;
-    });
-    setRequests(updatedRequests);
+
+      setRequests(requests.map(request => 
+        request._id === requestId ? { ...request, status: "accepted" } : request
+      ));
+    } catch (error) {
+      console.error("Error accepting request:", error);
+      alert("Failed to accept request");
+    }
   };
 
-  // Fonction pour gérer le refus de demande
-  const handleReject = (requestId) => {
-    const updatedRequests = requests.map((request) => {
-      if (request.id === requestId) {
-        return { ...request, statut: "Refusé" };
+  const handleReject = async (requestId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/requests/${requestId}/reject`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "rejected" }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update request status");
       }
-      return request;
-    });
-    setRequests(updatedRequests);
+
+      setRequests(requests.map(request => 
+        request._id === requestId ? { ...request, status: "rejected" } : request
+      ));
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+      alert("Failed to reject request");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="consult-requests-page">
+        <Navbar />
+        <div className="consult-requests-container">
+          <h2>📋 Demandes de Service</h2>
+          <p>Chargement en cours...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="consult-requests-page">
+        <Navbar />
+        <div className="consult-requests-container">
+          <h2>📋 Demandes de Service</h2>
+          <p className="error-message">Erreur: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="consult-requests-page">
       <Navbar />
-      
-
       <div className="consult-requests-container">
         <h2>📋 Demandes de Service</h2>
-
-        <RequestsTable
-          requests={requests}
-          onAccept={handleAccept} // Passer la fonction d'acceptation à la table
-          onReject={handleReject} // Passer la fonction de refus à la table
-        />
+        
+        {requests.length === 0 ? (
+          <p>Aucune demande trouvée</p>
+        ) : (
+          <RequestsTable
+            requests={requests}
+            onAccept={handleAccept}
+            onReject={handleReject}
+          />
+        )}
       </div>
     </div>
   );

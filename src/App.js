@@ -19,7 +19,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/acceuil" element={<Acceuil />} />
-        <Route path="/client-request-form" element={<ClientRequestForm />} />
+        <Route path="/client-request-form/:workerId" element={<ClientRequestForm />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} /> {/* Fixed case to lowercase */}
         <Route path="/consult-requests" element={<ConsultRequests />} /> {/* Fixed case */}
