@@ -69,6 +69,7 @@ const ConsultRequests = () => {
   return (
     <div className="consult-requests-page">
       <Navbar />
+      
 
       <div className="consult-requests-container">
         <h2>📋 Demandes de Service</h2>
