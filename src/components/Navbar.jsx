@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const isLoggedIn = !!localStorage.getItem("token");
   // Example user profile image (replace with actual user data)
   const userProfileImage = "/assets/images/img.avif"; // Placeholder image
 
@@ -32,12 +33,21 @@ const Navbar = () => {
               <Link to="/consult-requests" className="auth-button join-btn">
                 Espace artisan
               </Link>
-              <Link to="/login" className="auth-button login-btn">
-                Login
-              </Link>
-              <Link to="/login" className="auth-button sign-out-btn">
-                Sign out
-              </Link>
+
+              {/* Si pas connecté afficher Login */}
+              {!isLoggedIn && (
+                <Link to="/login" className="auth-button login-btn">
+                  Login
+                </Link>
+              )}
+
+              {/* Si connecté afficher Sign Out */}
+              {isLoggedIn && (
+                <Link to="/logout" className="auth-button sign-out-btn">
+                  Sign out
+                </Link>
+              )}
+
               {/* User Profile Icon */}
               <Link to="/profile" className="user-profile">
                 <img
