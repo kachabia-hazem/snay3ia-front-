@@ -57,6 +57,7 @@ function Acceuil() {
           throw new Error(`Failed to fetch categories: ${response.statusText}`);
         }
         const data = await response.json();
+        
         const categoryIcons = {
           Construction: <FiLayers className="category-icon" />,
           Plumbing: <FiZap className="category-icon" />,
@@ -80,23 +81,10 @@ function Acceuil() {
           "Home Security": <FiZap className="category-icon" />,
         };
 
-        const mappedCategories = data.map((category, index) => {
-          if (!category || !category.name) {
-            console.warn(`Invalid category at index ${index}:`, category);
-            return {
-              name: "Unknown",
-              count: 0,
-              icon: <FiHome className="category-icon" />,
-            };
-          }
-          return {
-            name: category.name,
-            count: category.articleCount || 0,
-            icon: categoryIcons[category.name] || (
-              <FiHome className="category-icon" />
-            ),
-          };
-        });
+        const mappedCategories = data.map((categoryName) => ({
+          name: categoryName,
+          icon: categoryIcons[categoryName] || <FiHome className="category-icon" />,
+        }));
 
         setCategories(mappedCategories);
         setLoading(false);
@@ -137,14 +125,12 @@ function Acceuil() {
                   <div key={index} className="category-card">
                     <div className="icon-container">{category.icon}</div>
                     <h3>{category.name}</h3>
-                    <p>Articles: {category.count}</p>
                   </div>
                 ))}
                 {categories.map((category, index) => (
                   <div key={`copy-${index}`} className="category-card">
                     <div className="icon-container">{category.icon}</div>
                     <h3>{category.name}</h3>
-                    <p>Articles: {category.count}</p>
                   </div>
                 ))}
               </div>
