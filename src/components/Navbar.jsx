@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const isLoggedIn = !!localStorage.getItem("token");
+
   // Example user profile image (replace with actual user data)
   const userProfileImage = "/assets/images/img.avif"; // Placeholder image
 
