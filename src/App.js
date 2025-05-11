@@ -11,6 +11,7 @@ import About from "./pages/About";
 import ConsultRequests from "./pages/ConsultRequests";
 import ReservationsPage from "./pages/ReservationsPage"; // Added import for ReservationsPage
 import ClientReportForm from "./pages/ClientReportForm";
+import ClientConsultReportsPage from "./pages/ClientConsultReportsPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           path="/client-report-form/:workerId"
           element={<ClientReportForm />}
         />
+        <Route path="/consult-reports" element={<ClientConsultReportsPage />} />
       </Routes>
     </div>
   );
