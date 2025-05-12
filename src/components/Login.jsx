@@ -82,14 +82,14 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <img src="/assets/images/logo.png" alt="Logo" className="logo" />
-        <h1 className="login-title">Welcome!</h1>
+        <h1 className="login-title">Bienvenue!</h1>
 
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label" htmlFor="phone">
-              Phone
+              Numero du Telephone
             </label>
             <input
               type="phone"
@@ -103,7 +103,7 @@ const Login = () => {
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="password">
-              Password
+              Mot de Passe
             </label>
             <input
               type="password"
@@ -124,25 +124,24 @@ const Login = () => {
               onChange={(e) => setRememberMe(e.target.checked)}
             />
             <label htmlFor="rememberMe" className="remember-me-label">
-              Remember me
+              Se souvenir de moi
             </label>
           </div>
           <div className="form-group">
             <button type="submit" className="login-button">
-              Login
-              
+              Se Connecter
             </button>
           </div>
           <div className="text-center">
             <a href="#" className="forgot-password">
-              Forget Password?
+              Mot de passe oublié?
             </a>
           </div>
         </form>
         <p className="register-link">
-          Don't have an Account?{" "}
+          Vous n'avez pas de compte?{" "}
           <Link to="/register" className="register-link">
-            Register
+            S'inscrire
           </Link>
         </p>
       </div>

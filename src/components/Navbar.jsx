@@ -73,7 +73,7 @@ const Navbar = () => {
               {/* Login button if not logged in */}
               {!isLoggedIn && (
                 <Link to="/login" className="auth-button login-btn">
-                  Login
+                  Connexion
                 </Link>
               )}
 
@@ -83,7 +83,7 @@ const Navbar = () => {
                   onClick={handleLogout}
                   className="auth-button sign-out-btn"
                 >
-                  Sign out
+                  Se déconnecter
                 </button>
               )}
 

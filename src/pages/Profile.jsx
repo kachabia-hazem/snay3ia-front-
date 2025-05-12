@@ -265,16 +265,16 @@ const Profile = () => {
       <Navbar />
       <div className="profile-container">
         <div className="main-content">
-          <h2 className="mb-4 profile-title">My Professional Profile</h2>
+          <h2 className="mb-4 profile-title">Mon profil professionnel</h2>
           <Card className="mb-4 profile-details-card">
             <Card.Body>
-              <h4 className="mb-3">Profile Details</h4>
+              <h4 className="mb-3">details de mon profil</h4>
               {isEditing ? (
                 <Form>
                   <Row>
                     <Col md={6}>
                       <Form.Group className="mb-3">
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>Prenom</Form.Label>
                         <Form.Control
                           type="text"
                           name="firstName"
@@ -286,7 +286,7 @@ const Profile = () => {
                     </Col>
                     <Col md={6}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Last Name</Form.Label>
+                        <Form.Label>Nom</Form.Label>
                         <Form.Control
                           type="text"
                           name="lastName"
@@ -298,7 +298,7 @@ const Profile = () => {
                     </Col>
                     <Col md={6}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Adresse Email</Form.Label>
                         <Form.Control
                           type="email"
                           name="email"
@@ -310,7 +310,7 @@ const Profile = () => {
                     </Col>
                     <Col md={6}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Phone</Form.Label>
+                        <Form.Label>Numéro de Téléphone</Form.Label>
                         <Form.Control
                           type="tel"
                           name="phone"
@@ -324,14 +324,16 @@ const Profile = () => {
                       <>
                         <Col md={6}>
                           <Form.Group className="mb-3">
-                            <Form.Label>Job (Service Category)</Form.Label>
+                            <Form.Label>Catégorie de Service</Form.Label>
                             <Form.Select
                               name="servicesCategory"
                               value={profileData.servicesCategory || ""}
                               onChange={handleInputChange}
                               required
                             >
-                              <option value="">Select a category</option>
+                              <option value="">
+                                Sélectionner une catégorie
+                              </option>
                               {categories.map((category) => (
                                 <option key={category} value={category}>
                                   {category}
@@ -342,7 +344,7 @@ const Profile = () => {
                         </Col>
                         <Col md={6}>
                           <Form.Group className="mb-3">
-                            <Form.Label>Years of Experience</Form.Label>
+                            <Form.Label>Années d'expérience</Form.Label>
                             <Form.Control
                               type="number"
                               name="experience"
@@ -355,7 +357,9 @@ const Profile = () => {
                         </Col>
                         <Col md={12}>
                           <Form.Group className="mb-3">
-                            <Form.Label>Address</Form.Label>
+                            <Form.Label>
+                              Adresse (Ville, Code Postal)
+                            </Form.Label>
                             <Form.Control
                               type="text"
                               name="location"
@@ -367,7 +371,9 @@ const Profile = () => {
                         </Col>
                         <Col md={12}>
                           <Form.Group className="mb-3">
-                            <Form.Label>Bio</Form.Label>
+                            <Form.Label>
+                              Biographie (présentez-vous en quelques lignes)
+                            </Form.Label>
                             <Form.Control
                               as="textarea"
                               rows={3}
@@ -380,7 +386,9 @@ const Profile = () => {
                         </Col>
                         <Col md={6}>
                           <Form.Group className="mb-3">
-                            <Form.Label>Availability</Form.Label>
+                            <Form.Label>
+                              Disponibilité (Disponible ou Non Disponible)
+                            </Form.Label>
                             <Form.Select
                               name="availability"
                               value={profileData.availability ?? true}
@@ -400,14 +408,14 @@ const Profile = () => {
                     className="action-btn me-2"
                     onClick={handleSaveChanges}
                   >
-                    Save Changes
+                    Sauvegarder
                   </Button>
                   <Button
                     variant="secondary"
                     className="action-btn"
                     onClick={() => setIsEditing(false)}
                   >
-                    Cancel
+                    Annuler
                   </Button>
                 </Form>
               ) : (
@@ -416,7 +424,7 @@ const Profile = () => {
                     <Col md={6}>
                       <p>
                         <FaUser className="me-2 text-muted icon" />
-                        <strong>Full Name:</strong>{" "}
+                        <strong>Nom et Prénom:</strong>{" "}
                         {profileData.firstName || profileData.lastName
                           ? `${profileData.firstName} ${profileData.lastName}`.trim()
                           : "N/A"}
@@ -427,7 +435,7 @@ const Profile = () => {
                             className="me-2 text-muted picon"
                             style={{ color: "#00C846" }}
                           />
-                          <strong>Job:</strong>{" "}
+                          <strong>Catégorie de Service:</strong>{" "}
                           {profileData.servicesCategory || "N/A"}
                         </p>
                       )}
@@ -436,7 +444,8 @@ const Profile = () => {
                           className="me-2 text-muted picon"
                           style={{ color: "#00C846" }}
                         />
-                        <strong>Phone:</strong> {profileData.phone || "N/A"}
+                        <strong>Numéro de Téléphone:</strong>{" "}
+                        {profileData.phone || "N/A"}
                       </p>
                     </Col>
                     <Col md={6}>
@@ -445,7 +454,8 @@ const Profile = () => {
                           className="me-2 text-muted picon"
                           style={{ color: "#00C846" }}
                         />
-                        <strong>Email:</strong> {profileData.email || "N/A"}
+                        <strong>Adresse Email:</strong>{" "}
+                        {profileData.email || "N/A"}
                       </p>
                       {profileData.role === "service_provider" && (
                         <>
@@ -454,11 +464,14 @@ const Profile = () => {
                               className="me-2 text-muted picon"
                               style={{ color: "#00C846" }}
                             />
-                            <strong>Address:</strong>{" "}
+                            <strong>Adresse (Ville, Code Postal):</strong>{" "}
                             {profileData.location || "N/A"}
                           </p>
                           <p>
-                            <strong>Bio:</strong> {profileData.bio || "N/A"}
+                            <strong>
+                              Biographie (présentez-vous en quelques lignes):
+                            </strong>{" "}
+                            {profileData.bio || "N/A"}
                           </p>
                         </>
                       )}
@@ -471,7 +484,7 @@ const Profile = () => {
                       onClick={() => setIsEditing(true)}
                     >
                       <FaUser className="me-2" />
-                      Edit
+                      Modifier
                     </Button>
                     <Button
                       variant="danger"
@@ -479,7 +492,7 @@ const Profile = () => {
                       onClick={handleShowDeleteModal}
                     >
                       <FaTrash className="me-2" />
-                      Delete
+                      Supprimer le compte
                     </Button>
                   </div>
                 </>
@@ -488,9 +501,10 @@ const Profile = () => {
           </Card>
           <ProfileContainer
             icon={<FaCalendarCheck />}
-            title="View Reservations"
-            subtitle="Check your upcoming and past reservations"
-            buttonText="View"
+            title="Mes Réservations"
+            subtitle="Consulter mes réservations"
+            description="Consulter mes réservations passées et à venir."
+            buttonText="Voir les réservations"
             onButtonClick={handleViewReservations}
             cardType="reservations"
           />
