@@ -1,13 +1,32 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, User } from "lucide-react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isLoggedIn = !!localStorage.getItem("token");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
 
-  // Example user profile image (replace with actual user data)
-  const userProfileImage = "/assets/images/img.avif"; // Placeholder image
+  // Check authentication status on component mount
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("userRole");
+
+    setIsLoggedIn(!!token);
+    setUserRole(role);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    setIsLoggedIn(false);
+    setUserRole(null);
+    navigate("/login");
+  };
+
+  // User profile image (placeholder or actual image)
+  const userProfileImage = "/assets/images/img.avif"; // Default placeholder
 
   return (
     <div className="navbar-container">
@@ -21,42 +40,63 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="desktop-menu">
             {[
-              { path: "/Acceuil", label: "Accueil" },
-              { path: "/Services populaires", label: "Services populaires" },
-              { path: "/Contactez-nous", label: "Contactez-nous" },
-              { path: "/About", label: "A propos" },
+              { path: "/", label: "Accueil" },
+              { path: "/services", label: "Services populaires" },
+              { path: "/contact", label: "Contactez-nous" },
+              { path: "/about", label: "A propos" },
             ].map((item) => (
               <Link key={item.path} to={item.path} className="nav-link">
                 {item.label}
               </Link>
             ))}
-            <div className="auth-buttons">
-              <Link to="/consult-requests" className="auth-button join-btn">
-                Espace artisan
-              </Link>
 
-              {/* Si pas connecté afficher Login */}
+            {/* Reports links based on user role */}
+            {isLoggedIn && userRole === "client" && (
+              <Link to="/reports/client" className="nav-link">
+                Mes Rapports
+              </Link>
+            )}
+
+            {isLoggedIn && userRole === "service_provider" && (
+              <Link to="/reports/worker" className="nav-link">
+                Rapports Clients
+              </Link>
+            )}
+
+            <div className="auth-buttons">
+              {userRole === "service_provider" && (
+                <Link to="/worker-dashboard" className="auth-button join-btn">
+                  Espace artisan
+                </Link>
+              )}
+
+              {/* Login button if not logged in */}
               {!isLoggedIn && (
                 <Link to="/login" className="auth-button login-btn">
                   Login
                 </Link>
               )}
 
-              {/* Si connecté afficher Sign Out */}
+              {/* Sign Out button if logged in */}
               {isLoggedIn && (
-                <Link to="/logout" className="auth-button sign-out-btn">
+                <button
+                  onClick={handleLogout}
+                  className="auth-button sign-out-btn"
+                >
                   Sign out
-                </Link>
+                </button>
               )}
 
               {/* User Profile Icon */}
-              <Link to="/profile" className="user-profile">
-                <img
-                  src={userProfileImage}
-                  alt="User Profile"
-                  className="user-profile-img"
-                />
-              </Link>
+              {isLoggedIn && (
+                <Link to="/profile" className="user-profile">
+                  <img
+                    src={userProfileImage}
+                    alt="User Profile"
+                    className="user-profile-img"
+                  />
+                </Link>
+              )}
             </div>
           </div>
 
@@ -81,10 +121,10 @@ const Navbar = () => {
         <div className="mobile-menu">
           <div className="mobile-menu-content">
             {[
-              { path: "/Acceuil", label: "Accueil" },
-              { path: "/Services populaires", label: "Services populaires" },
-              { path: "/Contactez-nous", label: "Contactez-nous" },
-              { path: "/About", label: "A propos" },
+              { path: "/", label: "Accueil" },
+              { path: "/services", label: "Services populaires" },
+              { path: "/contact", label: "Contactez-nous" },
+              { path: "/about", label: "A propos" },
             ].map((item) => (
               <Link
                 key={item.path}
@@ -95,47 +135,84 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+
+            {/* Mobile Reports links based on user role */}
+            {isLoggedIn && userRole === "client" && (
+              <Link
+                to="/reports/client"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                Mes Rapports
+              </Link>
+            )}
+
+            {isLoggedIn && userRole === "service_provider" && (
+              <Link
+                to="/reports/worker"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                Rapports Clients
+              </Link>
+            )}
+
             <div className="mobile-auth-buttons">
-              <Link
-                to="/ConsultRequests"
-                className="mobile-auth-button mobile-join-btn"
-                onClick={() => setMenuOpen(false)}
-              >
-                Espace artisan
-              </Link>
-              <Link
-                to="/login"
-                className="mobile-auth-button mobile-login-btn"
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                to="/login"
-                className="mobile-auth-button mobile-sign-out-btn"
-                onClick={() => setMenuOpen(false)}
-              >
-                Sign out
-              </Link>
+              {userRole === "service_provider" && (
+                <Link
+                  to="/worker-dashboard"
+                  className="mobile-auth-button mobile-join-btn"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Espace artisan
+                </Link>
+              )}
+
+              {/* Mobile Login button if not logged in */}
+              {!isLoggedIn && (
+                <Link
+                  to="/login"
+                  className="mobile-auth-button mobile-login-btn"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
+
+              {/* Mobile Sign Out button if logged in */}
+              {isLoggedIn && (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMenuOpen(false);
+                  }}
+                  className="mobile-auth-button mobile-sign-out-btn"
+                >
+                  Sign out
+                </button>
+              )}
+
               {/* Mobile User Profile Icon */}
-              <Link
-                to="/profile"
-                className="mobile-user-profile"
-                onClick={() => setMenuOpen(false)}
-              >
-                <img
-                  src={userProfileImage}
-                  alt="User Profile"
-                  className="mobile-user-profile-img"
-                />
-                Profil
-              </Link>
+              {isLoggedIn && (
+                <Link
+                  to="/profile"
+                  className="mobile-user-profile"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <img
+                    src={userProfileImage}
+                    alt="User Profile"
+                    className="mobile-user-profile-img"
+                  />
+                  Profil
+                </Link>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      <style jsx>{`
+      <style jsx="true">{`
         /* Base Styles */
         .navbar-container {
           font-family: Arial, sans-serif;
@@ -249,10 +326,11 @@ const Navbar = () => {
           color: white;
           border: 2px solid rgb(188, 0, 63);
           width: 120px;
+          cursor: pointer;
         }
 
         .sign-out-btn:hover {
-          background-color: rgb(188, 0, 63);
+          background-color: rgb(158, 0, 53);
           transform: translateY(-2px);
         }
 
@@ -315,7 +393,7 @@ const Navbar = () => {
 
         /* Mobile Menu */
         .mobile-menu {
-          display: ${menuOpen ? "block" : "none"};
+          display: block;
           background-color: #ffffff;
           border-top: 1px solid #e2e8f0;
           padding: 1.5rem 0;
@@ -386,6 +464,7 @@ const Navbar = () => {
           background-color: rgb(188, 0, 63);
           color: white;
           border: 2px solid rgb(188, 0, 63);
+          cursor: pointer;
         }
 
         .mobile-join-btn {

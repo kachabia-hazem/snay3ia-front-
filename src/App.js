@@ -2,8 +2,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Routes, Route } from "react-router-dom"; // Removed unused Router import
+import { Routes, Route, Navigate } from "react-router-dom"; // Removed unused Router import
 import "./index.css";
+
 import Acceuil from "./pages/Acceuil";
 import ClientRequestForm from "./pages/ClientRequestForm";
 import Profile from "./pages/Profile";
@@ -12,6 +13,22 @@ import ConsultRequests from "./pages/ConsultRequests";
 import ReservationsPage from "./pages/ReservationsPage"; // Added import for ReservationsPage
 import ClientReportForm from "./pages/ClientReportForm";
 import ClientConsultReportsPage from "./pages/ClientConsultReportsPage";
+import WorkerConsultReportsPage from "./pages/WorkerConsultReportsPage"; // Added import for WorkerConsultReportsPage
+
+const AuthGuard = ({ children, requiredRole }) => {
+  const isAuthenticated = !!localStorage.getItem("token");
+  const userRole = localStorage.getItem("userRole");
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (requiredRole && userRole !== requiredRole) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
@@ -36,7 +53,23 @@ function App() {
           path="/client-report-form/:workerId"
           element={<ClientReportForm />}
         />
-        <Route path="/consult-reports" element={<ClientConsultReportsPage />} />
+        <Route
+          path="/reports/client"
+          element={
+            <AuthGuard requiredRole="client">
+              <ClientConsultReportsPage />
+            </AuthGuard>
+          }
+        />
+        {/* Worker routes */}
+        <Route
+          path="/reports/worker"
+          element={
+            <AuthGuard requiredRole="service_provider">
+              <WorkerConsultReportsPage />
+            </AuthGuard>
+          }
+        />
       </Routes>
     </div>
   );
